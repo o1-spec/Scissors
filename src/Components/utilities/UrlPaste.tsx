@@ -28,7 +28,7 @@ function UrlPaste() {
                   </select>
                 </div>
                 <div className="allas">
-                  <input type="text" placeholder="Type Allas Here"  className="text-blue w-full rounded-md border border-blue text-sm p-4 placeholder:text-blue focus:outline-none"/>
+                  <input type="text" placeholder="Type Alias Here"  className="text-blue w-full rounded-md border border-blue text-sm p-4 placeholder:text-blue focus:outline-none"/>
                 </div>
               </div>
             </div>

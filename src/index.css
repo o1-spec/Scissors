@@ -16,7 +16,7 @@
     margin-right: 0.5rem;
   }
 
-  .header{
+  .header {
     transition: all 0.7s;
   }
 
@@ -30,7 +30,7 @@
     transition: all 0.7s;
   }
 
-  .scrolled nav{
+  .scrolled nav {
     padding-right: 40px;
     padding-left: 40px;
   }
@@ -38,6 +38,12 @@
   .multiple-bg {
     background-image: url("../images/Group 3 (1).png"),
       url("../images/Group 2 (1).png");
+    background-position: top left, right bottom;
+  }
+
+  .question-bg {
+    background-image: url("../images/Group 3 (3).png"),
+      url("../images/Group 2 (3).png");
     background-position: top left, right bottom;
   }
 

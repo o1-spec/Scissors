@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../config/firebase";
 
 function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +23,38 @@ function SignUpForm() {
     getValues,
   } = useForm();
 
+  const signIn = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      const notify = () => {
+        toast.error(`${error.message}`, {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          style: {
+            fontSize: "1rem",
+          },
+        });
+      };
+      notify();
+      console.log(error.message);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const onSubmit = (data: FieldValues) => {
     console.log(data);
     reset();
@@ -34,10 +68,10 @@ function SignUpForm() {
             Sign Up with:
           </p>
           <div className="flex items-center justify-center gap-6 pb-4">
-            <button >
+            <button onClick={signInWithGoogle}>
               <img src="../images/Google.svg" alt="Google icon" />
             </button>
-            <button >
+            <button>
               <img src="../images/Apple.svg" alt="Apple icon" />
             </button>
           </div>
@@ -133,7 +167,7 @@ function SignUpForm() {
               type="submit"
               disabled={isSubmitting}
               value="Sign up with Email"
-        
+              onClick={signIn}
             />
           </div>
         </form>
@@ -161,6 +195,7 @@ function SignUpForm() {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

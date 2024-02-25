@@ -1,4 +1,5 @@
 import Choose from "../utilities/Choose";
+import Faq from "../utilities/Faq";
 import Footer from "../utilities/Footer";
 import Hero from "../utilities/Hero";
 import Nav from "../utilities/Nav";
@@ -14,6 +15,7 @@ function Homepage() {
       <Choose/>
       <Pricing/>
       <UrlPaste/>
+      <Faq/>
       <Revo/>
       <Footer/>
     </div>

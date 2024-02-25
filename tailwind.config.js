@@ -10,6 +10,7 @@ export default {
       usersWhite: '#f9fbfd',
       scissorsBlack: 'rgba(50, 132, 255, 0.13)',
       validRed: '#ff0000',
+      linkGray: '#B2BEB5',
       box2: 'linear-gradient(180deg, #1E3448 99.99%, rgba(30, 52, 72, 0) 100%);'
     },
     extend: {

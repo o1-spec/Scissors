@@ -3,6 +3,8 @@ import Homepage from "./Components/pages/Homepage";
 import Login from "./Components/pages/Login";
 import SignUp from "./Components/pages/SignUp";
 import { ToastContainer } from "react-toastify";
+import Reset from "./Components/pages/Reset";
+import TrimUrl from "./Components/pages/TrimUrl";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,14 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/reset",
+    element: <Reset />,
+  },
+  {
+    path: "/trim",
+    element: <TrimUrl />,
   },
 ]);
 
