@@ -1,21 +1,39 @@
+import { getFirestore, addDoc, collection } from "firebase/firestore";
+import { nanoid } from "nanoid";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function TrimSection() {
-  const [analytics, setAnalytics] = useState(false)
-  
+  const [input, setInput] = useState("");
+  const [shorten, setShorten] = useState("");
+  const handledb = async () => {
+    const db = getFirestore();
+    const slug = nanoid(5); // Generates a random 5-character string
+
+    try {
+      await addDoc(collection(db, "urls"), {
+        url: input,
+        slug: slug,
+      });
+      setShorten(`${window.location.origin}/${slug}`);
+      console.log("Document successfully written!");
+    } catch (error) {
+      console.error("Error writing document: ", error);
+    }
+  };
+
   return (
     <div className="max-w-[1000px] my-0 mx-auto pt-16">
       <div className="flex gap-1">
         <div className="flex flex-col gap-12 basis-[16%] border-r border-t pt-4 pr-4 border-r-navBlack">
           <div className="flex gap-2">
-            <img src="./images/Link.svg" alt="Link" className="w-7"/>
+            <img src="./images/Link.svg" alt="Link" className="w-7" />
             <Link to="/" className="text-xl">
               Link
             </Link>
           </div>
           <div className="flex gap-2">
-            <img src="./images/Analytics.svg" alt="Analytics" className="w-7"/>
+            <img src="./images/Analytics.svg" alt="Analytics" className="w-7" />
             <Link to="/" className="text-xl">
               Analytics
             </Link>
@@ -28,11 +46,14 @@ function TrimSection() {
               <label className="text-xl font-bold">URL Destination</label>
               <input
                 type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
                 className="border focus:outline-1 focus:outline-navBlack px-2 py-[2px] rounded-[4px]"
               />
               <span className="text-linkGray text-sm">
                 You can create more than 10 links per month
               </span>
+              <span className="text-linkGray text-sm">{shorten}</span>
             </div>
             <div className="flex flex-col gap-2">
               <label className="text-xl font-bold">Alias</label>
@@ -48,7 +69,10 @@ function TrimSection() {
           </div>
           <div>
             <div className="flex justify-end pt-5">
-              <button className="bg-blue text-white px-4 py-2.5 rounded-lg">
+              <button
+                className="bg-blue text-white px-4 py-2.5 rounded-lg"
+                onClick={handledb}
+              >
                 Create Link
               </button>
             </div>

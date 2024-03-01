@@ -5,6 +5,7 @@ import SignUp from "./Components/pages/SignUp";
 import { ToastContainer } from "react-toastify";
 import Reset from "./Components/pages/Reset";
 import TrimUrl from "./Components/pages/TrimUrl";
+import Redirect from "./Components/pages/Redirect";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     path: "/trim",
     element: <TrimUrl />,
   },
+  {
+    path: "/:slug",
+    element: <Redirect/>
+  }
 ]);
 
 function App() {
