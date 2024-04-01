@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { FacebookAuthProvider } from "firebase/auth/cordova";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAL8oXbL1abFe938RZ3627UW95AgO_4Qsk",
-  authDomain: "scissorsnew-e1bb1.firebaseapp.com",
-  projectId: "scissorsnew-e1bb1",
-  storageBucket: "scissorsnew-e1bb1.appspot.com",
-  messagingSenderId: "797730633116",
-  appId: "1:797730633116:web:62bc8bce63bfee7b998459",
-  measurementId: "G-2776N7KZNP",
+  apiKey: "AIzaSyB1pevLZhOYsTULyQAs7lQEaAO8GCnjjgk",
+  authDomain: "scissors-a5192.firebaseapp.com",
+  databaseURL: "https://scissors-a5192-default-rtdb.firebaseio.com",
+  projectId: "scissors-a5192",
+  storageBucket: "scissors-a5192.appspot.com",
+  messagingSenderId: "32794036847",
+  appId: "1:32794036847:web:2be7a96f1991d05ddc9b9a",
+  measurementId: "G-E2G5KWPVRR",
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const db = () => getFirestore(app);
 export const database = getAuth(app);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
+export const facebookProvider = new FacebookAuthProvider();

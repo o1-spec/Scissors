@@ -1,32 +1,54 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FieldValues, useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  User,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, facebookProvider, googleProvider } from "../../config/firebase";
 
-function LoginForm() {
+const initialState = {
+  email: "",
+  password: "",
+};
+
+interface LoginFormProps {
+  setUser: (user: User) => void;
+  setLogin: (value: boolean) => void;
+}
+
+function LoginForm({ setLogin, setUser }: LoginFormProps) {
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [state, setState] = useState(initialState);
+  const { email, password } = state;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm();
+  const navigate = useNavigate();
 
-  const Login = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      const notify = () => {
-        toast.error(`${error.message}`, {
+      e.preventDefault();
+      if (email && password) {
+        const { user } = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        navigate("/trim");
+        setUser(user);
+        setLoading(true);
+        setLogin(true);
+      } else {
+        return toast.error("All fields are mandatory to fill", {
           position: "bottom-left",
           autoClose: 5000,
           hideProgressBar: false,
@@ -39,16 +61,112 @@ function LoginForm() {
             fontSize: "1rem",
           },
         });
-      };
-      notify();
-      console.log(error.message);
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        const notify = () => {
+          toast.error(`${err}`, {
+            position: "bottom-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            style: {
+              fontSize: "1rem",
+            },
+          });
+        };
+        notify();
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
-    reset();
+  const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      setUser(user);
+      navigate("/trim");
+      setLoading(false);
+      toast.success("Login with Google Complete", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        style: {
+          fontSize: "1rem",
+        },
+      });
+    } catch (error: unknown) {
+      toast.error("Error logging in with Google", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        style: {
+          fontSize: "1rem",
+        },
+      });
+    }
   };
+  
+  const signInWithFacebook = async () => {
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
+      const user = result.user;
+      setUser(user);
+      navigate("/trim");
+      setLoading(false);
+      toast.success("Login with Facebook Complete", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        style: {
+          fontSize: "1rem",
+        },
+      });
+    } catch (error: unknown) {
+      toast.error("Error Loging In with Facebook", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        style: {
+          fontSize: "1rem",
+        },
+      });
+    }
+  };
+
+  if (loading) {
+    return (
+      <div>
+        <p className="text-xl">Loading ....</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -58,47 +176,42 @@ function LoginForm() {
             Log in with:
           </p>
           <div className="flex items-center justify-center gap-6 pb-4">
-            <Link to="/">
+            <button onClick={signInWithGoogle}>
               <img src="../images/Google.svg" alt="Google icon" />
-            </Link>
-            <Link to="/">
-              <img src="../images/Apple.svg" alt="Apple icon" />
-            </Link>
+            </button>
+            <button
+              onClick={signInWithFacebook}
+              className="bg-white flex gap-1.5 items-center text-blue border border-blue py-1.5 px-3 rounded-md"
+            >
+              <i className="fa-brands fa-facebook-f text-lg"></i>
+              <span>Facebook</span>
+            </button>
           </div>
         </div>
         <p className="text-center">Or</p>
         <form
-          onSubmit={handleSubmit(onSubmit)}
           className="pt-5 flex flex-col duration-300 gap-y-6"
+          onSubmit={handleSubmit}
         >
           <div>
             <input
-              {...register("email", {
-                required: "Email is required",
-              })}
               className="w-full border-2 border-blue focus:outline-none focus:border-2 rounded-[14px] placeholder:text-sm py-2 px-3"
               type="email"
               placeholder="Email address or username"
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={email}
+              onChange={handleChange}
             />
-            {errors.email && (
-              <p className="text-[12px] pt-[3px] pl-[8px] text-validRed">{`${errors.email.message}`}</p>
-            )}
           </div>
           <div className="">
             <div className="flex items-center relative">
               <input
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 10,
-                    message: "Password must be at least 10 characters",
-                  },
-                })}
                 className="w-full border-2 border-blue focus:outline-none focus:border-2 rounded-[14px] placeholder:text-sm py-2 px-4"
                 type={showPassword ? "text" : "password"}
                 placeholder="password"
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={password}
+                onChange={handleChange}
               />
               <img
                 className="cursor-pointer absolute right-2"
@@ -107,9 +220,6 @@ function LoginForm() {
                 onClick={togglePasswordVisibility}
               />
             </div>
-            {errors.password && (
-              <p className="text-[12px] pt-[3px] pl-[8px] text-validRed">{`${errors.password.message}`}</p>
-            )}
           </div>
           <Link to="/reset" className="text-right text-blue text-sm">
             Forgot your password
@@ -119,8 +229,6 @@ function LoginForm() {
               type="submit"
               className="w-full text-center text-white border cursor-pointer border-blue bg-blue px-4 py-3 rounded-3xl pointer-events-auto hover:bg-white hover:text-blue  transition dura"
               value="login"
-              disabled={isSubmitting}
-              onClick={Login}
             />
           </div>
         </form>
@@ -144,7 +252,6 @@ function LoginForm() {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }

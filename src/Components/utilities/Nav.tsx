@@ -1,7 +1,9 @@
+import { User } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function Nav() {
+function Nav({ user }: { user: User | null }) {
+  //console.log(user);
   const [scrolled, setScrolled] = useState(false);
 
   const handleScroll = () => {
@@ -72,17 +74,29 @@ function Nav() {
               </Link>
             </div>
           </ul>
-          <div className="flex items-center gap-7">
-            <Link to="/login" className="text-[14px] text-blue">
-              Log in
-            </Link>
-            <Link
-              to="/signup"
-              className="text-white font-semibold text-[16px] px-6 py-3 rounded-2xl bg-blue hover:bg-white hover:text-blue border-blue border-[1px] transition duration-300"
-            >
-              Try for free
-            </Link>
-          </div>
+          {!user ? (
+            <div className="flex items-center gap-7">
+              <Link to="/login" className="text-[14px] text-blue">
+                Log in
+              </Link>
+              <Link
+                to="/signup"
+                className="text-white font-semibold text-[16px] px-6 py-3 rounded-2xl bg-blue hover:bg-white hover:text-blue border-blue border-[1px] transition duration-300"
+              >
+                Try for free
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <Link to="/trim">
+                <img src="" alt="" />
+                <p className="text-[27px] font-semibold italic font-designFont">
+                  {user?.displayName}
+                </p>
+              </Link>
+            </div>
+          )}
+
           <div className="w-[3rem] hidden">
             <img
               className="menu-open"

@@ -1,6 +1,7 @@
+import { User } from "firebase/auth";
 import { Link } from "react-router-dom";
 
-function Hero() {
+function Hero({ user }: { user: User | null }) {
   return (
     <>
       <section className="px-[100px] py-[100px]">
@@ -28,13 +29,15 @@ function Hero() {
               </p>
             </div>
             <div className="flex items-center gap-8 pt-4">
-              <Link
-                to="/"
-                className="text-white font-normal text-[16px] px-8 py-3 rounded-2xl bg-blue hover:bg-white hover:text-blue border-blue border-[1px] transition duration-300"
-              >
-                Sign Up
-              </Link>
-              <Link to="/" className="text-blue text-sm">
+              {!user && (
+                <Link
+                  to="/signup"
+                  className="text-white font-normal text-[16px] px-8 py-3 rounded-2xl bg-blue hover:bg-white hover:text-blue border-blue border-[1px] transition duration-300"
+                >
+                  Sign Up
+                </Link>
+              )}
+              <Link to="/#faq" className="text-blue text-sm">
                 Learn more
               </Link>
             </div>
@@ -82,19 +85,31 @@ function Hero() {
             </div>
             <div className="flex items-center gap-10">
               <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4"> 3M </span>
+                <span className="text-navBlack font-semibold text-3xl pb-4">
+                  {" "}
+                  3M{" "}
+                </span>
                 <p className="text-sm">Active Users</p>
               </div>
               <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4"> 60M </span>
+                <span className="text-navBlack font-semibold text-3xl pb-4">
+                  {" "}
+                  60M{" "}
+                </span>
                 <p className="text-sm">Links & QR codes created</p>
               </div>
               <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4"> 1B </span>
+                <span className="text-navBlack font-semibold text-3xl pb-4">
+                  {" "}
+                  1B{" "}
+                </span>
                 <p className="text-sm">Clicked & Scanned connections</p>
               </div>
               <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4"> 300K </span>
+                <span className="text-navBlack font-semibold text-3xl pb-4">
+                  {" "}
+                  300K{" "}
+                </span>
                 <p className="text-sm">App integrations</p>
               </div>
             </div>

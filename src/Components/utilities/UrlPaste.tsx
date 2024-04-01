@@ -1,6 +1,7 @@
+import { User } from "firebase/auth";
 import { Link } from "react-router-dom";
 
-function UrlPaste() {
+function UrlPaste({ user }: { user: User | null }) {
   return (
     <>
       <section className="relative overflow-y-hidden pt-20">
@@ -28,19 +29,27 @@ function UrlPaste() {
                   </select>
                 </div>
                 <div className="allas">
-                  <input type="text" placeholder="Type Alias Here"  className="text-blue w-full rounded-md border border-blue text-sm p-4 placeholder:text-blue focus:outline-none"/>
+                  <input
+                    type="text"
+                    placeholder="Type Alias Here"
+                    className="text-blue w-full rounded-md border border-blue text-sm p-4 placeholder:text-blue focus:outline-none"
+                  />
                 </div>
               </div>
             </div>
             <div className="flex items-center py-5 justify-center">
-              <Link to="/" className="bg-blue text-white rounded-3xl flex items-center justify-center gap-3 w-full p-4 text-center ">
+              <Link
+                to={user ? "/trim" : "/signup"}
+                className="bg-blue text-white rounded-3xl flex items-center justify-center gap-3 w-full p-4 text-center "
+              >
                 <img src="./images/magic wand.svg" alt="magic wand" />
                 Trim URL
               </Link>
             </div>
             <p className="text-blue text-sm text-center">
               By clicking TrimURL, I agree to the <span>Terms of Service</span>,
-              <span className="font-semibold">Privacy Policy</span> and Use of Cookies.
+              <span className="font-semibold">Privacy Policy</span> and Use of
+              Cookies.
             </p>
           </div>
           {/*<div class="vector-box-1">
