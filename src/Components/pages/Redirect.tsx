@@ -1,11 +1,5 @@
-import { useEffect } from "react";
-import { db } from "../../config/firebase";
-import { useParams } from "react-router-dom";
-import { collection } from "firebase/firestore";
-
 function Redirect() {
-  const { slug } = useParams();
-
+  /*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,7 +17,7 @@ function Redirect() {
     };
 
     fetchData();
-  }, [slug]);
+  }, [slug]);*/
   return <div></div>;
 }
 

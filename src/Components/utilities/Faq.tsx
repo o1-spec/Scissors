@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 
+interface FaqData {
+  faq: FaqInterface[];
+}
+
+interface FaqInterface {
+  answer: string;
+  id: number;
+  question: string;
+}
+
 function Faq() {
   const [isVisible, setIsVisible] = useState(Array(8).fill(false));
-  const [faqData, setFaqData] = useState([]);
-
+  const [faqData, setFaqData] = useState<FaqData>({ faq: [] });
   const toggleVisibility = (index: number) => {
     const updatedVisibility = [...isVisible];
     updatedVisibility[index] = !updatedVisibility[index];
@@ -27,12 +36,12 @@ function Faq() {
           FAQs
         </h3>
         <div className="max-w-4xl my-0 mx-auto">
-          {faq?.map((faq : object, index: number) => (
+          {faq?.map((faq: FaqInterface, index: number) => (
             <div className="pb-12" key={faq?.id}>
               <div className="flex justify-between pb-1">
                 <span className="text-xl font-semibold">{faq?.question}</span>
                 <img
-                className="cursor-pointer"
+                  className="cursor-pointer"
                   src={
                     isVisible[index]
                       ? "./images/minus.svg"
