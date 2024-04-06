@@ -12,7 +12,9 @@ function TrimUrl({ PostContext }: TrimProp) {
   const { user } = useContext(PostContext);
   return (
     <div className="font-customFont overflow-hidden">
-      <Nav user={user} />
+      <div className="">
+        <Nav user={user} />
+      </div>
       <TrimSection />
       <Footer />
     </div>

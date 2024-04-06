@@ -13,7 +13,7 @@ function UrlPaste({ user }: { user: User | null }) {
                   className="text-blue w-full rounded-md border border-blue text-sm p-4 placeholder:text-blue focus:outline-none"
                   type="text"
                   placeholder="please paste URL"
-                />
+                /> 
               </div>
               <div className="w-full flex gap-5">
                 <div className="domain">
