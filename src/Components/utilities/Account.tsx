@@ -25,7 +25,7 @@ function Account({ logout, setLogout, handleLogout }: TrimSection) {
   const [newDisplayName, setNewDisplayName] = useState("");
   const navigate = useNavigate();
 
-  console.log(user);
+  //console.log(user);
 
   const handleUpdateChange = (e: React.FormEvent) => {
     e.preventDefault();
