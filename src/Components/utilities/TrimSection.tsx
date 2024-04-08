@@ -1,331 +1,95 @@
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
-import { auth, db } from "../../config/firebase";
 import { Link } from "react-router-dom";
-import { nanoid } from "nanoid";
 import { useState } from "react";
+import Create from "./Create";
+import Total from "./Total";
+import Account from "./Account";
 
-function TrimSection() {
-  const [inputError, setInputError] = useState("");
-  const [input, setInput] = useState("");
-  const [linkName, setLinkName] = useState("");
-  const [alias, setAlias] = useState("");
-  const [shortLink, setShortLink] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [aliasError, setAliasError] = useState("");
+export interface TrimSection {
+  logout: boolean;
+  setLogout: (value: boolean) => void;
+  handleLogout: () => void;
+}
+
+function TrimSection({ logout, setLogout, handleLogout }: TrimSection) {
   const [isLoading, setIsLoading] = useState(false);
-  const [qrCodeData, setQrCodeData] = useState("");
-  const user = auth.currentUser;
-
-  const userId = user?.uid;
-  const userDocRef = userId
-    ? collection(db, "user-collection", userId, "slug")
-    : "";
-
-  const colRefs = collection(db, "urls");
-
-  const handleLinkName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const nameOfLink = e.target.value;
-    if (!nameOfLink) {
-      setNameError("Name is required");
-    } else {
-      setLinkName(nameOfLink.trim());
-    }
-  };
-
-  const handleAlias = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const linkAlias = e.target.value;
-    if (colRefs && linkAlias) {
-      try {
-        let aliasAvailable = true;
-
-        getDocs(colRefs).then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const { slug } = doc.data();
-            if (slug === linkAlias) {
-              aliasAvailable = false;
-            }
-          });
-
-          if (aliasAvailable) {
-            setAliasError("Alias is available");
-          } else {
-            setAliasError("Alias already exists");
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    } else if (!linkAlias) {
-      setAliasError("");
-    }
-    setAlias(linkAlias.trim());
-  };
-
-  const generateQrCode = async (url: string) => {
-    try {
-      const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
-        url
-      )}&color=ddb640&bgcolor=37323e&margin=10`;
-      const res = await fetch(apiUrl);
-      return res.url;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = e.target.value;
-    setInput(url.trim());
-    setInputError("");
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const slug = nanoid(5); // generates a random 5 character string
-    if (!user) {
-      if (input.startsWith("https://") || input.startsWith("http://")) {
-        setIsLoading(true);
-        try {
-          const docRef = doc(colRefs, slug); // Create a DocumentReference using the slug as the document ID
-          await setDoc(docRef, {
-            url: input,
-            slug: slug,
-          });
-          setShortLink(`${window.location.origin}/${slug}`);
-          setIsLoading(false);
-          setInput("");
-          console.log(input);
-        } catch (error) {
-          console.log(error);
-          setIsLoading(false);
-        }
-      } else if (!input) {
-        setInputError("Link is required");
-      } else setInputError("Please enter a valid link");
-    } else if (user && userId) {
-      if (input && linkName) {
-        setIsLoading(true);
-        const docId = nanoid(15);
-        const docRef = doc(colRefs, docId); // Create a DocumentReference using the docId as the document ID
-        if (!alias || alias.trim() === "") {
-          const qrCodeDataUrl = await generateQrCode(
-            `${window.location.origin}/${slug}`
-          );
-          try {
-            await setDoc(docRef, {
-              linkName: linkName,
-              qrCodeData: qrCodeDataUrl,
-              shortLink: `${window.location.origin}/${slug}`,
-              slug: slug,
-              timesClicked: 0,
-              url: input,
-            });
-          } catch (error) {
-            console.log(error);
-          }
-
-          if (userDocRef) {
-            const DocRef = doc(userDocRef, docId);
-            try {
-              await setDoc(DocRef, {
-                linkName: linkName,
-                qrCodeData: qrCodeDataUrl,
-                shortLink: `${window.location.origin}/${slug}`,
-                slug: slug,
-                timesClicked: 0,
-                url: input,
-              });
-              setShortLink(`${window.location.origin}/${slug}`);
-              if (qrCodeDataUrl) {
-                setQrCodeData(qrCodeDataUrl);
-              }
-              setIsLoading(false);
-              setInput("");
-              setAlias("");
-              setLinkName("");
-            } catch (error) {
-              console.log(error);
-              setIsLoading(false);
-            }
-          }
-        } else if (alias) {
-          const qrCodeDataUrl = await generateQrCode(
-            `${window.location.origin}/${alias}`
-          );
-          try {
-            await setDoc(docRef, {
-              linkName: linkName,
-              qrCodeData: qrCodeDataUrl,
-              shortLink: `${window.location.origin}/${alias}`,
-              slug: alias,
-              timesClicked: 0,
-              url: input,
-            });
-          } catch (error) {
-            console.log(error);
-          }
-
-          if (userDocRef) {
-            const DocRef = doc(userDocRef, docId);
-            try {
-              await setDoc(DocRef, {
-                linkName: linkName,
-                qrCodeData: qrCodeDataUrl,
-                shortLink: `${window.location.origin}/${alias}`,
-                slug: alias,
-                timesClicked: 0,
-                url: input,
-              });
-              setShortLink(`${window.location.origin}/${alias}`);
-              if (qrCodeDataUrl) {
-                setQrCodeData(qrCodeDataUrl);
-              }
-              setIsLoading(false);
-              setInput("");
-              setAlias("");
-              setLinkName("");
-            } catch (error) {
-              console.log(error);
-              setIsLoading(false);
-            }
-          }
-        }
-      } else {
-        setInputError("Link is required");
-        setNameError("Name is required");
-      }
-    }
-  };
-
-  const handleCopy = () => {
-    try {
-      navigator.clipboard.writeText(shortLink);
-      alert("Link copied to clipboard");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [page, setPage] = useState(true);
+  const [account, setAccount] = useState(false);
+  const [total, setTotal] = useState(false);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
+  const handleAccount = () => {
+    setPage(false);
+    setAccount(true);
+    setTotal(false);
+  };
+
+  const handleTotal = () => {
+    setPage(false);
+    setAccount(false);
+    setTotal(true);
+  };
+
+  const handlePage = () => {
+    setPage(true);
+    setAccount(false);
+    setTotal(false);
+  };
+
   return (
-    <div className="max-w-[1000px] my-0 mx-auto pt-16">
-      <div className="flex gap-1">
-        <div className="flex flex-col gap-12 basis-[16%] border-r border-t pt-4 pr-4 border-r-navBlack">
+    <div className="pt-16 px-16 footer-bg bg-no-repeat">
+      <div className="flex gap-1 h-full">
+        <div className="flex flex-col gap-16 basis-[16%] min-h-[60vh] border-r border-t pt-8 pr-4 border-r-navBlack">
           <div className="flex gap-2">
             <img src="./images/Link.svg" alt="Link" className="w-7" />
-            <Link to="/" className="text-xl">
-              Link
+            <Link
+              to="/"
+              onClick={(e) => {
+                e.preventDefault();
+                handlePage();
+              }}
+              className="text-xl"
+            >
+              Create
             </Link>
           </div>
           <div className="flex gap-2">
-            <img src="./images/Analytics.svg" alt="Analytics" className="w-7" />
-            <Link to="/" className="text-xl">
-              Analytics
+            <img src="./images/Link.svg" alt="Link" className="w-7" />
+            <Link
+              to="/"
+              onClick={(e) => {
+                e.preventDefault();
+                handleTotal();
+              }}
+              className="text-xl"
+            >
+              Links
+            </Link>
+          </div>
+          <div className="flex gap-2 items-center">
+            <Link
+              to="/"
+              onClick={(e) => {
+                e.preventDefault();
+                handleAccount();
+              }}
+              className="text-xl flex items-center gap-2"
+            >
+              <i className="fa-solid fa-user w-7"></i>
+              Account
             </Link>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="basis-[84%] pl-6 pt-4">
-          <h2 className="text-3xl font-bold pb-4">Create link</h2>
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <label className="text-xl font-bold">URL Destination</label>
-              <input
-                type="url"
-                name="url"
-                id="url"
-                value={input}
-                onChange={handleInputChange}
-                className="border focus:outline-1 focus:outline-navBlack px-2 py-[2px] rounded-[4px]"
-              />
-              {inputError ? (
-                <p className="text-red-600 font-light text-xs">{inputError}</p>
-              ) : (
-                <span className="text-linkGray text-sm">
-                  You can create more than 10 links per month
-                </span>
-              )}
-              <span className="text-linkGray text-sm"></span>
-            </div>
-            <div className="flex w-full gap-7">
-              <div className="flex flex-col gap-2 basis-[50%]">
-                <label className="text-xl font-bold">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  onChange={handleLinkName}
-                  name="name"
-                  value={linkName}
-                  className="border focus:outline-navBlack px-2 py-[2px] rounded-[4px]"
-                />
-                {nameError && (
-                  <p className="text-red-600 font-light text-xs">{nameError}</p>
-                )}
-              </div>
-              <div className="flex flex-col gap-2 basis-[50%]">
-                <label className="text-xl font-bold">Alias</label>
-                <input
-                  type="text"
-                  id="alias"
-                  onChange={handleAlias}
-                  value={alias}
-                  className="border focus:outline-navBlack px-2 py-[2px] rounded-[4px]"
-                />
-                {aliasError && (
-                  <p
-                    className={`${
-                      aliasError === "Alias already exists"
-                        ? "text-red-600 font-light text-xs"
-                        : "text-green-600 font-thin text-xs"
-                    }`}
-                  >
-                    {aliasError}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div>
-              <h5 className="text-xl font-bold">QR Code Generator</h5>
-              <div className="w-44 h-44 hidden"></div>
-            </div>
-          </div>
-          <div>
-            <div className="flex justify-end pt-5">
-              <button className="bg-blue text-white px-4 py-2.5 rounded-lg">
-                Create Link
-              </button>
-            </div>
-          </div>
-        </form>
-        {shortLink ? (
-          <div className="flex flex-col items-center justify-center">
-            <div className="flex items-center justify-center mt-5">
-              <a
-                href={shortLink}
-                className="p-3 hover:text-accent bg-shadow rounded-lg mr-3 shadow-sm shadow-accent"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {shortLink ? shortLink : ""}
-              </a>
-              <button
-                onClick={handleCopy}
-                className="rounded-lg bg-accent font-bold text-background p-3 border border-accent hover:bg-transparent hover:text-accent transition-all active:translate-y-1"
-              >
-                Copy
-              </button>
-            </div>
-            {qrCodeData ? (
-              <img src={qrCodeData} alt="qr code" className="mt-5 w-44 h-44" />
-            ) : (
-              ""
-            )}
-          </div>
-        ) : (
-          ""
+        {page && <Create isLoading={isLoading} setIsLoading={setIsLoading} />}
+        {total && <Total />}
+        {account && (
+          <Account
+            logout={logout}
+            setLogout={setLogout}
+            handleLogout={handleLogout}
+          />
         )}
       </div>
     </div>

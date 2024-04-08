@@ -37,7 +37,11 @@ function Faq() {
         </h3>
         <div className="max-w-4xl my-0 mx-auto">
           {faq?.map((faq: FaqInterface, index: number) => (
-            <div className="pb-12" key={faq?.id}>
+            <div
+              className="pb-12 cursor-pointer"
+              key={faq?.id}
+              onClick={() => toggleVisibility(index)}
+            >
               <div className="flex justify-between pb-1">
                 <span className="text-xl font-semibold">{faq?.question}</span>
                 <img

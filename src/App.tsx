@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { User } from "firebase/auth";
+import { User, signOut } from "firebase/auth";
 import { auth } from "./config/firebase";
 import { ToastContainer } from "react-toastify";
 
@@ -10,12 +10,14 @@ import Login from "./Components/pages/Login";
 import SignUp from "./Components/pages/SignUp";
 import Reset from "./Components/pages/Reset";
 import TrimUrl from "./Components/pages/TrimUrl";
+import Redirect from "./Components/pages/Redirect";
 
 export interface PostContextValue {
   setUser: (user: User) => void;
   user: User | null;
   logIn: boolean;
   setLogin: (logIn: boolean) => void;
+  handleLogout: () => void;
 }
 
 const initialPostContextValue: PostContextValue = {
@@ -23,6 +25,7 @@ const initialPostContextValue: PostContextValue = {
   user: null,
   logIn: false,
   setLogin: (_logIn: boolean) => {},
+  handleLogout: () => {},
 };
 
 export const PostContext = createContext<PostContextValue>(
@@ -71,6 +74,12 @@ function App() {
     });
   }, []);
 
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      setUser(null);
+    });
+  };
+
   return (
     <BrowserRouter>
       <PostContext.Provider
@@ -79,6 +88,7 @@ function App() {
           setUser,
           logIn,
           setLogin,
+          handleLogout,
         }}
       >
         <ToastContainer />
@@ -90,6 +100,7 @@ function App() {
             element={<SignUp PostContext={PostContext} />}
           />
           <Route path="/reset" element={<Reset />} />
+          <Route path="/:slug" element={<Redirect />} />
           <Route path="/trim" element={<TrimUrl PostContext={PostContext} />} />
         </Routes>
       </PostContext.Provider>

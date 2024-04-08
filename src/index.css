@@ -16,6 +16,27 @@
     margin-right: 0.5rem;
   }
 
+  .overlay {
+    position: absolute;
+    transition: all 2000ms;
+    top: 0;
+    left: 0;
+    width: 100%;
+    filter: blur(8px);
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 20;
+  }
+
+  .logout-box {
+    position: fixed;
+    top: 30vh;
+    left: 35vw;
+    z-index: 30 !important;
+  }
+
   .header {
     transition: all 0.7s;
   }
