@@ -94,10 +94,10 @@ function Account({ logout, setLogout, handleLogout }: TrimSection) {
   };
   return (
     <>
-      <div className="pl-10 w-full">
+      <div className="md:pl-10 pl-4 w-full pt-12 md:pt-0 pr-4 md:pr-0">
         <h3 className="text-2xl font-medium pb-8">Account Information</h3>
-        <div className="flex gap-8">
-          <div className="flex flex-col gap-8 basis-[30%]">
+        <div className="flex gap-8 flex-col md:flex-row">
+          <div className="flex flex-col gap-8 md:basis-[30%] basis-[100%]">
             <div className="flex flex-col gap-2">
               <label className="text-xl font-normal">Username</label>
               <p>{user?.displayName}</p>
@@ -106,7 +106,7 @@ function Account({ logout, setLogout, handleLogout }: TrimSection) {
               <label className="text-xl font-normal">Email</label>
               <p>{user?.email}</p>
             </div>
-            <div className="mt-24">
+            <div className="md:mt-24 mt-4">
               <button
                 onClick={() => setLogout(true)}
                 className="text-white bg-validRed rounded-md px-4 py-2 cursor-pointer hover:bg-white text-lg hover:text-validRed duration-300 border border-validRed"
@@ -160,9 +160,9 @@ function Account({ logout, setLogout, handleLogout }: TrimSection) {
         </div>
       </div>
       {logout && (
-        <div className="bg-blue rounded-lg px-20 py-12 fixed top-[30vh] left-[35vw] z-50 logout-box">
+        <div className="bg-blue rounded-lg px-20 py-12 fixed top-[30vh] md:left-[30vw] lg:left-[35vw] sm:left-[18vw] left-6 mr-7 md:mr-0 z-50 logout-box">
           <div className="flex flex-col gap-5">
-            <p className="text-white text-xl">
+            <p className="text-white text-xl text-center">
               Are you sure you want to logout
             </p>
             <div className="flex items-center justify-center gap-3">

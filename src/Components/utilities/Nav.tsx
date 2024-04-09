@@ -28,7 +28,7 @@ function Nav({ user }: { user: User | null }) {
   return (
     <>
       <header className={navbarClasses.join(" ")}>
-        <nav className="flex items-center justify-between py-4 lg:px-24 md:px-12 px-6 transition duration-300">
+        <nav className="flex items-center justify-between shadow-md py-4 lg:px-24 md:px-12 px-6 transition duration-300">
           <div className="flex items-center gap-2">
             <img src="./images/Vector (4).svg" alt="scissors-icon" />
             <img src="./images/Vector 2.svg" alt="scissors-line" />
@@ -37,8 +37,8 @@ function Nav({ user }: { user: User | null }) {
           <ul
             className={
               nav
-                ? "flex items-center gap-12 fixed flex-col lg:flex-row lg:relative top-0 left-0 bottom-0 right-0 pt-20 lg:pt-0 lg:bg-none bg-white z-20 transition-all duration-500"
-                : "flex items-center gap-12 fixed flex-col lg:flex-row lg:relative top-0 left-0 bottom-0 right-0 md:bg-none pt-20 lg:pt-0 bg-white z-20 -translate-y-[800%] lg:-translate-y-0 transition-all duration-500"
+                ? "flex items-center gap-12 fixed flex-col lg:flex-row lg:relative top-0 left-0 bottom-0 right-0 pt-20 lg:pt-0 lg:bg-none bg-white z-20 md:z-0 transition-all duration-500"
+                : "flex items-center gap-12 fixed flex-col lg:flex-row lg:relative top-0 left-0 bottom-0 right-0 md:bg-none pt-20 lg:pt-0 bg-white z-20 md:z-0 -translate-y-[800%] lg:-translate-y-0 transition-all duration-500"
             }
           >
             <img
@@ -116,7 +116,7 @@ function Nav({ user }: { user: User | null }) {
               </Link>
             </div>
           ) : (
-            <div className="pr-10 md:pr-0">
+            <div className="pr-10 md:pr-4">
               <Link to="/trim">
                 <img src="" alt="" />
                 <p className="text-[27px] font-semibold italic font-designFont">

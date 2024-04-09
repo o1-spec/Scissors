@@ -7,6 +7,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../../config/firebase";
+import Loader from "./Loader";
 
 const initialState = {
   email: "",
@@ -92,7 +93,7 @@ function LoginForm({ setLogin, setUser }: LoginFormProps) {
       const user = result.user;
       setUser(user);
       navigate("/trim");
-      setLoading(false);
+      setLoading(true);
       toast.success("Login with Google Complete", {
         position: "bottom-left",
         autoClose: 5000,
@@ -120,16 +121,18 @@ function LoginForm({ setLogin, setUser }: LoginFormProps) {
           fontSize: "1rem",
         },
       });
+    } finally {
+      setLoading(false);
     }
   };
-  
+
   const signInWithFacebook = async () => {
     try {
       const result = await signInWithPopup(auth, facebookProvider);
       const user = result.user;
       setUser(user);
       navigate("/trim");
-      setLoading(false);
+      setLoading(true);
       toast.success("Login with Facebook Complete", {
         position: "bottom-left",
         autoClose: 5000,
@@ -157,22 +160,29 @@ function LoginForm({ setLogin, setUser }: LoginFormProps) {
           fontSize: "1rem",
         },
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   if (loading) {
     return (
-      <div>
-        <p className="text-xl">Loading ....</p>
+      <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex items-center justify-center">
+        <Loader />
       </div>
     );
   }
 
   return (
     <>
-      <div className="flex flex-col md:w-[500px] px-4 md:px-0 my-0 mx-auto pt-12">
+      <div className="flex fixed z-20 bg-white items-center gap-2 pt-4 pb-3 pl-4 w-full shadow-md md:hidden">
+        <img src="./images/Vector (4).svg" alt="scissors-icon" />
+        <img src="./images/Vector 2.svg" alt="scissors-line" />
+        <span className="font-extrabold text-3xl text-blue">SCISSOR</span>
+      </div>
+      <div className="flex flex-col md:w-[500px] px-4 md:px-0 my-0 mx-auto md:pt-12 pt-24">
         <div>
-          <p className="text-sm md:translate-x-[300%] translate-x-[200%] inline-block pb-5">
+          <p className="text-sm md:translate-x-[300%] translate-x-[180%] inline-block pb-5">
             Log in with:
           </p>
           <div className="flex items-center justify-center gap-6 pb-4">

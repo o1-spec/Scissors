@@ -12,11 +12,11 @@ function TrimUrl({ PostContext }: TrimProp) {
   const { user, handleLogout } = useContext(PostContext);
   const [logout, setLogout] = useState(false);
   return (
-    <div className="font-customFont overflow-hidden question-bg">
+    <div className="font-customFont overflow-hidden">
       {logout && <div className="overlay"></div>}
       <div className="">
         <Nav user={user} />
-      </div>
+      </div> 
       <TrimSection
         logout={logout}
         setLogout={setLogout}

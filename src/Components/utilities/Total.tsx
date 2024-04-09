@@ -23,7 +23,11 @@ interface UserLinks {
   linkName: string;
 }
 
-function Total() {
+interface handlePage {
+  handlePage: () => void;
+}
+
+function Total({ handlePage }: handlePage) {
   const [arr, setArr] = useState<UserLinks[]>([]);
 
   const user = auth.currentUser;
@@ -112,25 +116,34 @@ function Total() {
   //console.log(arr);
 
   return (
-    <div className="pl-12 w-full">
-      <h3 className=" text-blue text-3xl font-semibold pb-5">
+    <div className="md:pl-12 pl-4 w-full pr-4 md:pr-0">
+      <h3 className=" text-blue text-3xl font-semibold pb-5 md:pt-0 pt-12">
         Your Shortened Links
       </h3>
       {arr.length === 0 && (
         <div className="flex items-center justify-center mt-6">
           <div className="flex flex-col gap-2 justify-center items-center bg-blue text-white px-10 py-6 rounded-md">
-            <p className="text-lg">You have not created any link yet</p>
-            <Link to="/" className="bg-white text-blue rounded-md px-3 py-1.5">
+            <p className="text-lg text-center">
+              You have not created any link yet
+            </p>
+            <Link
+              to="/"
+              onClick={(e) => {
+                e.preventDefault();
+                handlePage();
+              }}
+              className="bg-white text-blue rounded-md px-3 py-1.5"
+            >
               Create
             </Link>
           </div>
         </div>
       )}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 grid-cols-1">
         {arr.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center border-2 rounded-md border-blue py-4 px-3"
+            className="flex flex-col items-center justify-center border-2 rounded-md border-blue py-4 px-3 w-[300px] lg:w-fit"
           >
             <div className="w-[180px]">
               <img src={item.qrCodeData} alt="" />

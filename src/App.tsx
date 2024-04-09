@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 
 import Homepage from "./Components/pages/Homepage";
 import Login from "./Components/pages/Login";
-import SignUp from "./Components/pages/SignUp"; 
+import SignUp from "./Components/pages/SignUp";
 import Reset from "./Components/pages/Reset";
 import TrimUrl from "./Components/pages/TrimUrl";
 import Redirect from "./Components/pages/Redirect";
@@ -107,6 +107,7 @@ function App() {
           />
           <Route path="/reset" element={<Reset />} />
           <Route path="/:slug" element={<Redirect />} />
+
           <Route path="/trim" element={<TrimUrl PostContext={PostContext} />} />
         </Routes>
       </PostContext.Provider>

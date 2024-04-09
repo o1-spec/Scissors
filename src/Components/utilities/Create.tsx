@@ -2,13 +2,15 @@ import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 import { nanoid } from "nanoid";
 import { useState } from "react";
+import Loader from "./Loader";
 
 interface CreateInterface {
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
+  handleTotal: () => void;
 }
 
-function Create({ isLoading, setIsLoading }: CreateInterface) {
+function Create({ isLoading, setIsLoading, handleTotal }: CreateInterface) {
   const [inputError, setInputError] = useState("");
   const [input, setInput] = useState("");
   const [linkName, setLinkName] = useState("");
@@ -97,7 +99,7 @@ function Create({ isLoading, setIsLoading }: CreateInterface) {
           setShortLink(`${window.location.origin}/${slug}`);
           setIsLoading(false);
           setInput("");
-          console.log(input);
+          //console.log(input);
         } catch (error) {
           console.log(error);
           setIsLoading(false);
@@ -193,6 +195,7 @@ function Create({ isLoading, setIsLoading }: CreateInterface) {
             }
           }
         }
+        handleTotal();
       } else {
         setInputError("Link is required");
         setNameError("Name is required");
@@ -210,12 +213,19 @@ function Create({ isLoading, setIsLoading }: CreateInterface) {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex items-center justify-center">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="basis-[84%] pl-6 pt-4">
+      <form
+        onSubmit={handleSubmit}
+        className="basis-[100%] md:basis-[84%] w-full md:pl-6 pl-4 pt-10 pr-7 md:pr-0"
+      >
         <h2 className="text-3xl font-bold pb-4">Create link</h2>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
@@ -237,8 +247,8 @@ function Create({ isLoading, setIsLoading }: CreateInterface) {
             )}
             <span className="text-linkGray text-sm"></span>
           </div>
-          <div className="flex w-full gap-7">
-            <div className="flex flex-col gap-2 basis-[50%]">
+          <div className="flex w-full md:gap-x-7 gap-y-6 md:gap-y-0 flex-col md:flex-row">
+            <div className="flex flex-col gap-2 basis-[50%] w-full">
               <label className="text-xl font-bold">Name</label>
               <input
                 type="text"
@@ -252,7 +262,7 @@ function Create({ isLoading, setIsLoading }: CreateInterface) {
                 <p className="text-red-600 font-light text-xs">{nameError}</p>
               )}
             </div>
-            <div className="flex flex-col gap-2 basis-[50%]">
+            <div className="flex flex-col gap-2 basis-[50%] w-full">
               <label className="text-xl font-bold">Alias</label>
               <input
                 type="text"
@@ -277,7 +287,10 @@ function Create({ isLoading, setIsLoading }: CreateInterface) {
         </div>
         <div>
           <div className="flex justify-end pt-12">
-            <button className="bg-blue text-white px-4 py-2.5 rounded-lg">
+            <button
+              type="submit"
+              className="bg-blue text-white px-4 py-2.5 rounded-lg"
+            >
               Create Link
             </button>
           </div>

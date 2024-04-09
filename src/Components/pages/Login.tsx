@@ -11,7 +11,7 @@ function Login({ PostContext }: LoginProp) {
 
   return (
     <div className="font-customFont overflow-hidden">
-      <div className="footer-bg w-full h-full absolute top-5 left-0 right-0 bottom-0 -z-10"></div>
+      {/*<div className="footer-bg w-full h-full absolute top-5 left-0 right-0 bottom-0 -z-10"></div>*/}
       <LoginForm setLogin={setLogin} setUser={setUser} />
       <Footer />
     </div>

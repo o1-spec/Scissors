@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <>
-      <footer className="footer-bg bg-no-repeat py-16">
+      <footer className="bg-no-repeat py-16">
         <p className="text-center">&copy; Copyright Onadokun Oluwafemi 2024</p>
         <div>
           <div className="flex gap-3 items-center justify-center pt-2">

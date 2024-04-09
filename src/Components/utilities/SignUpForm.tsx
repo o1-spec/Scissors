@@ -9,6 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../../config/firebase";
+import Loader from "./Loader";
 
 const initialState = {
   userName: "",
@@ -57,6 +58,7 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
           email,
           password
         );
+        setLoading(true);
         await updateProfile(user, { displayName: userName });
       } else {
         return toast.error("All fields are mandatory to fill", {
@@ -95,6 +97,8 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
         notify();
       }
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,7 +108,7 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
       const user = result.user;
       setUser(user);
       navigate("/trim");
-      setLoading(false);
+      setLoading(true);
       toast.success("Sign Up with Google Complete", {
         position: "bottom-left",
         autoClose: 2000,
@@ -132,6 +136,8 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
           fontSize: "1rem",
         },
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -141,7 +147,7 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
       const user = result.user;
       setUser(user);
       navigate("/trim");
-      setLoading(false);
+      setLoading(true);
       toast.success("Sign In with Facebook Complete", {
         position: "bottom-left",
         autoClose: 2000,
@@ -169,6 +175,8 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
           fontSize: "1rem",
         },
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -177,12 +185,21 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
   };
 
   if (loading) {
-    return <div className="mt-40">Loading ....</div>;
+    return (
+      <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex items-center justify-center">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <>
-      <div className="flex flex-col md:w-[500px] my-0 px-4 md:px-0 mx-auto pt-8">
+      <div className="flex fixed z-20 bg-white items-center gap-2 pt-4 pb-3 pl-4 w-full shadow-md md:hidden">
+        <img src="./images/Vector (4).svg" alt="scissors-icon" />
+        <img src="./images/Vector 2.svg" alt="scissors-line" />
+        <span className="font-extrabold text-3xl text-blue">SCISSOR</span>
+      </div>
+      <div className="flex flex-col md:w-[500px] my-0 px-4 md:px-0 mx-auto md:pt-8 pt-24">
         <div>
           <p className="text-sm md:translate-x-[250%] translate-x-[140%] inline-block pb-5">
             Sign Up with:
