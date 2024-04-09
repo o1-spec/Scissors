@@ -5,7 +5,7 @@ import { useEffect, useState, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { User, signOut } from "firebase/auth";
 import { auth } from "./config/firebase";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import Homepage from "./Components/pages/Homepage";
 import Login from "./Components/pages/Login";
@@ -66,6 +66,35 @@ const router = createBrowserRouter([
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [logIn, setLogin] = useState(true);
+  const [online, setOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => {
+      setOnline(true);
+      toast.dismiss("offline-toast");
+      toast.success("You are now connected to the internet!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+    };
+
+    const handleOffline = () => {
+      setOnline(false);
+      toast.error("You are not connected to the internet!", {
+        position: "top-center",
+        autoClose: false, 
+        toastId: "offline-toast",
+      });
+    };
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, [online]);
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
