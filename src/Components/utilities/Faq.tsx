@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-
+import Aos from "aos";
+import "aos/dist/aos.css";
 interface FaqData {
   faq: FaqInterface[];
 }
@@ -28,14 +29,22 @@ function Faq() {
 
   const faq = faqData?.faq;
 
+  useEffect(() => {
+    Aos.init({ duration: 3000 });
+  }, []);
+
   return (
     <>
-      <section className="question-bg pt-4 bg-no-repeat" id="faq">
+      <section
+        data-aos="fade-up" 
+        className="question-bg pt-4 bg-no-repeat"
+        id="faq"
+      >
         <h3 className="text-2xl text-center pb-16">
           <span className="line"></span>
           FAQs
         </h3>
-        <div className="max-w-4xl my-0 mx-auto">
+        <div className="max-w-4xl my-0 mx-auto px-4 lg:px-0">
           {faq?.map((faq: FaqInterface, index: number) => (
             <div
               className="pb-12 cursor-pointer"
@@ -43,7 +52,7 @@ function Faq() {
               onClick={() => toggleVisibility(index)}
             >
               <div className="flex justify-between pb-1">
-                <span className="text-xl font-semibold">{faq?.question}</span>
+                <span className="text-lg md:text-xl font-semibold">{faq?.question}</span>
                 <img
                   className="cursor-pointer"
                   src={

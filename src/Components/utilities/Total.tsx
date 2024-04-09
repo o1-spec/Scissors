@@ -106,16 +106,26 @@ function Total() {
         return item;
       });
     });
-    toast.success("Link Deleted")
-    location.reload()
+    toast.success("Link Deleted");
+    location.reload();
   };
-  console.log(arr);
+  //console.log(arr);
 
   return (
-    <div className="pl-12">
+    <div className="pl-12 w-full">
       <h3 className=" text-blue text-3xl font-semibold pb-5">
         Your Shortened Links
       </h3>
+      {arr.length === 0 && (
+        <div className="flex items-center justify-center mt-6">
+          <div className="flex flex-col gap-2 justify-center items-center bg-blue text-white px-10 py-6 rounded-md">
+            <p className="text-lg">You have not created any link yet</p>
+            <Link to="/" className="bg-white text-blue rounded-md px-3 py-1.5">
+              Create
+            </Link>
+          </div>
+        </div>
+      )}
       <div className="grid grid-cols-3 gap-6">
         {arr.map((item, index) => (
           <div

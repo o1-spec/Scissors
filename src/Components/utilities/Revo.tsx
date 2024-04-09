@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Revo({ user }: { user: User | null }) {
   return (
     <>
-      <section className="bg-[#1E3448] py-16 bg-no-repeat revo-bg">
+      <section className="bg-[#1E3448] py-16 bg-no-repeat revo-bg px-3 md:px-0">
         <div className="flex flex-col items-center justify-center">
           <h6 className="text-white text-center pb-6 text-xl">
             Revolutionizing Link Optimization Get Started

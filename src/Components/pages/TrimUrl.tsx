@@ -12,7 +12,7 @@ function TrimUrl({ PostContext }: TrimProp) {
   const { user, handleLogout } = useContext(PostContext);
   const [logout, setLogout] = useState(false);
   return (
-    <div className="font-customFont overflow-hidden">
+    <div className="font-customFont overflow-hidden question-bg">
       {logout && <div className="overlay"></div>}
       <div className="">
         <Nav user={user} />
@@ -22,7 +22,7 @@ function TrimUrl({ PostContext }: TrimProp) {
         setLogout={setLogout}
         handleLogout={handleLogout}
       />
-      <Footer />
+      <Footer /> 
     </div>
   );
 }

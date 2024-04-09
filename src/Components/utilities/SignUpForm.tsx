@@ -182,9 +182,9 @@ function SignUpForm({ setUser, setLogin }: SignFormProps) {
 
   return (
     <>
-      <div className="flex flex-col w-[500px] my-0 mx-auto pt-8">
+      <div className="flex flex-col md:w-[500px] my-0 px-4 md:px-0 mx-auto pt-8">
         <div>
-          <p className="text-sm translate-x-[250%] inline-block pb-5">
+          <p className="text-sm md:translate-x-[250%] translate-x-[140%] inline-block pb-5">
             Sign Up with:
           </p>
           <div className="flex items-center justify-center gap-6 pb-4">

@@ -1,31 +1,39 @@
 import { User } from "firebase/auth";
+import { ReactTyped } from "react-typed";
 import { Link } from "react-router-dom";
+import Possibilities from "./Possibilities";
 
 function Hero({ user }: { user: User | null }) {
   return (
     <>
-      <section className="px-[100px] py-[100px]">
+      <section className="md:px-[100px] md:py-[100px] px-3 py-10 pt-14">
         <div className="hero">
           <div className="flex items-center text-center flex-col">
             <div className="hero-head">
-              <h2 className="text-navBlack text-[48px] font-extrabold px-[70px] leading-relaxed">
+              <h2 className="text-navBlack md:text-[48px] text-4xl font-extrabold md:px-[70px] px-4 md:leading-relaxed leading-14">
                 Optimize Your Online Experience With Our Advanced URL &nbsp;
                 <span className="text-blue relative">
-                  Shortening
+                  Shortening 
                   <img
                     src="./images/Vector 3.svg"
-                    className="absolute -bottom-[40%] -left-0"
+                    className="absolute md:-bottom-[40%] -bottom-[20%] -left-0"
                   />
                   &nbsp; Solution
                 </span>
               </h2>
             </div>
-            <div className="hero-text px-[160px] pt-8 leading-6 text-lg">
+            <div className="hero-text md:px-[160px] px-6 pt-8 leading-6 text-lg">
               <p>
                 Personalize your shortened URLs to align with your brand
                 identity. Utilize custom slugs, branded links, and domain
-                customization options to reinforce your brand presence and
-                enhance user engagement.
+                customization options to
+                <ReactTyped
+                  strings={[
+                    "&nbsp; reinforce your brand presence and enhance user engagement",
+                  ]}
+                  typeSpeed={100}
+                  loop
+                />
               </p>
             </div>
             <div className="flex items-center gap-8 pt-4">
@@ -53,7 +61,7 @@ function Hero({ user }: { user: User | null }) {
                   <img src="./images/Frame 1000001716.svg" alt="" />
                 </div>
                 <div>
-                  <p className="text-center text-[1rem] text-navBlack px-44 py-4">
+                  <p className="text-center text-[1rem] text-navBlack md:px-44 px-10 py-4">
                     Seamlessly transform your long URLs into concise and
                     shareable links with just few clicks.
                   </p>
@@ -72,50 +80,7 @@ function Hero({ user }: { user: User | null }) {
           </div>
         </div>
       </section>
-
-      <section className="bg-usersWhite -translate-x-3">
-        <div className="my-0 mx-auto py-5 px-3 max-w-[1100px]">
-          <div className="flex items-center justify-between">
-            <div className="users-head">
-              <p className="font-semibold text-4xl">
-                One stop
-                <br />
-                Four <span className="text-blue">Possibilities</span>
-              </p>
-            </div>
-            <div className="flex items-center gap-10">
-              <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4">
-                  {" "}
-                  3M{" "}
-                </span>
-                <p className="text-sm">Active Users</p>
-              </div>
-              <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4">
-                  {" "}
-                  60M{" "}
-                </span>
-                <p className="text-sm">Links & QR codes created</p>
-              </div>
-              <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4">
-                  {" "}
-                  1B{" "}
-                </span>
-                <p className="text-sm">Clicked & Scanned connections</p>
-              </div>
-              <div className="user">
-                <span className="text-navBlack font-semibold text-3xl pb-4">
-                  {" "}
-                  300K{" "}
-                </span>
-                <p className="text-sm">App integrations</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Possibilities />
     </>
   );
 }

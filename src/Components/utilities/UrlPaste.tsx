@@ -5,8 +5,8 @@ function UrlPaste({ user }: { user: User | null }) {
   return (
     <>
       <section className="relative overflow-y-hidden pt-20">
-        <div className="flex items-center justify-center bg-[#1E3448] multiple-bg py-20 px-0 bg-no-repeat ">
-          <div className="bg-white p-8 flex flex-col rounded-md max-w-[470px]">
+        <div className="flex items-center justify-center bg-[#1E3448] multiple-bg py-20 px-4 md:px-0 bg-no-repeat ">
+          <div className="bg-white md:p-8 py-8 px-6 flex flex-col rounded-md max-w-[470px]">
             <div className="flex flex-col gap-4">
               <div className="url">
                 <input
@@ -26,7 +26,7 @@ function UrlPaste({ user }: { user: User | null }) {
                     <option value="basic">Basic</option>
                     <option value="professional">Professional</option>
                     <option value="teams">Teams</option>
-                  </select>
+                  </select> 
                 </div>
                 <div className="allas">
                   <input

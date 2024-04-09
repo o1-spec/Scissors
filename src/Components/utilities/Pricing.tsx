@@ -1,8 +1,14 @@
+import Aos from "aos";
+import { useEffect } from "react";
+
 function Pricing() {
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
   return (
     <>
-      <section className="pt-12 pb-8" id="pricing">
-        <div className="text-center">
+      <section data-aos="fade-up" className="pt-12 pb-8" id="pricing">
+        <div className="text-center px-3 md:px-0">
           <h4 className="pb-5 text-4xl font-semibold">
             <span className="line"></span>A{" "}
             <span className="text-blue">price perfect</span> for your needs
@@ -10,11 +16,11 @@ function Pricing() {
           <p className="text-center max-w-[600px] mx-auto my-0 text-base">
             From catering for your personal, business, event, socials needs, you
             can be rest assured we have you in mind in our pricing.
-          </p>
+          </p> 
         </div>
-        <div className="max-w-[1100px] my-0 mx-auto translate-x-24 pt-16 pl-7 pb-7">
-          <div className="flex items-center">
-            <div className="border border-blue border-r-0 max-w-fit rounded-md pt-7 pr-8 pb-8 pl-16">
+        <div className="max-w-[1100px] my-0 mx-auto lg:translate-x-24 pt-16 lg:pl-7 md:pl-4 pl-0 md:px-4 pb-7">
+          <div className="flex items-center flex-col md:flex-row">
+            <div className="border border-blue border-r-1 md:border-r-0 max-w-fit rounded-md pt-7 pr-8 pb-8 pl-16">
               <p className="text-xl pb-4">Basic</p>
               <h6 className="text-4xl font-extrabold pb-4">Free</h6>
               <p className="text-xl">Free for all users</p>
@@ -68,7 +74,7 @@ function Pricing() {
                 </div>
               </div>
             </div>
-            <div className="border border-blue border-l-0 rounded-md pt-7 pr-10 pb-8 pl-12">
+            <div className="border border-blue md:border-l-0 border-l-1 rounded-md pt-7 pr-10 pb-8 pl-12">
               <p className="text-xl pb-4">Teams</p>
               <h6 className="text-4xl font-extrabold pb-4">25$/month</h6>
               <p className="text-xl">Share with up to 10 users</p>
@@ -98,7 +104,10 @@ function Pricing() {
           </div>
         </div>
         <div className="pt-7 flex justify-center gap-5">
-          <a href="#" className="rounded-xl transition duration-300 text-blue py-2 px-5 text-sm border border-blue">
+          <a
+            href="#"
+            className="rounded-xl transition duration-300 text-blue py-2 px-5 text-sm border border-blue"
+          >
             Get Custom Pricing
           </a>
           <a

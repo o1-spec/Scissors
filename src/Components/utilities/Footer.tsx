@@ -14,7 +14,7 @@ function Footer() {
             </Link>
             <Link to="https://instagram.com/black_dokun">
               <img src="./images/svg.feather.svg" alt="instagram" />
-            </Link>
+            </Link> 
             <Link to="tel:07058266972">
               <img
                 src="./images/i.fi-social-linkedin.svg"

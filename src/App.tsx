@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import "aos/dist/aos.css";
+import Aos from "aos";
 import { useEffect, useState, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { User, signOut } from "firebase/auth";
@@ -7,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 
 import Homepage from "./Components/pages/Homepage";
 import Login from "./Components/pages/Login";
-import SignUp from "./Components/pages/SignUp";
+import SignUp from "./Components/pages/SignUp"; 
 import Reset from "./Components/pages/Reset";
 import TrimUrl from "./Components/pages/TrimUrl";
 import Redirect from "./Components/pages/Redirect";
@@ -79,6 +81,10 @@ function App() {
       setUser(null);
     });
   };
+
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
 
   return (
     <BrowserRouter>

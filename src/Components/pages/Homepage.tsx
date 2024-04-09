@@ -38,7 +38,7 @@ function Homepage({ PostContext }: HomepageProp) {
         <Faq />
       </div>
       <Revo user={user} />
-      <Footer />
+      <Footer /> 
     </div>
   );
 }

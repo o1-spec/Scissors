@@ -170,9 +170,9 @@ function LoginForm({ setLogin, setUser }: LoginFormProps) {
 
   return (
     <>
-      <div className="flex flex-col w-[500px] my-0 mx-auto pt-12">
+      <div className="flex flex-col md:w-[500px] px-4 md:px-0 my-0 mx-auto pt-12">
         <div>
-          <p className="text-sm translate-x-[300%] inline-block pb-5">
+          <p className="text-sm md:translate-x-[300%] translate-x-[200%] inline-block pb-5">
             Log in with:
           </p>
           <div className="flex items-center justify-center gap-6 pb-4">
