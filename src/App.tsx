@@ -13,6 +13,7 @@ import SignUp from "./Components/pages/SignUp";
 import Reset from "./Components/pages/Reset";
 import TrimUrl from "./Components/pages/TrimUrl";
 import Redirect from "./Components/pages/Redirect";
+import PrivateRoutes from "./Components/Helpers/PrivateRoutes";
 
 export interface PostContextValue {
   setUser: (user: User) => void;
@@ -107,8 +108,12 @@ function App() {
           />
           <Route path="/reset" element={<Reset />} />
           <Route path="/:slug" element={<Redirect />} />
-
-          <Route path="/trim" element={<TrimUrl PostContext={PostContext} />} />
+          <Route element={<PrivateRoutes />}>
+            <Route
+              path="/trim"
+              element={<TrimUrl PostContext={PostContext} />}
+            />
+          </Route>
         </Routes>
       </PostContext.Provider>
     </BrowserRouter>
