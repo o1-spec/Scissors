@@ -14,6 +14,7 @@ import Reset from "./Components/pages/Reset";
 import TrimUrl from "./Components/pages/TrimUrl";
 import Redirect from "./Components/pages/Redirect";
 import PrivateRoutes from "./Components/Helpers/PrivateRoutes";
+import ErrorPage from "./Components/pages/ErrorPage";
 
 export interface PostContextValue {
   setUser: (user: User) => void;
@@ -82,7 +83,7 @@ function App() {
       setOnline(false);
       toast.error("You are not connected to the internet!", {
         position: "top-center",
-        autoClose: false, 
+        autoClose: false,
         toastId: "offline-toast",
       });
     };
@@ -143,6 +144,7 @@ function App() {
               element={<TrimUrl PostContext={PostContext} />}
             />
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </PostContext.Provider>
     </BrowserRouter>
