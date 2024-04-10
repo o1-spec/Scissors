@@ -24,10 +24,12 @@ function TrimSection({
   const [account, setAccount] = useState(false);
   const [total, setTotal] = useState(false);
   const [create, setCreate] = useState(false);
+  const [activeLink, setActiveLink] = useState("");
 
   const handleAccount = () => {
     setPage(false);
     setAccount(true);
+    setActiveLink("account");
     setTotal(false);
   };
 
@@ -35,14 +37,15 @@ function TrimSection({
     setPage(false);
     setAccount(false);
     setTotal(true);
+    setActiveLink("total");
   };
 
   const handlePage = () => {
     setPage(true);
     setAccount(false);
     setTotal(false);
+    setActiveLink("create");
   };
-
   if (isLoading) {
     return (
       <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex items-center justify-center">
@@ -74,7 +77,11 @@ function TrimSection({
               : "flex flex-col gap-16 basis-[16%] transition-all duration-500 md:translate-x-0 min-h-[60vh] md:border-r z-20  md:min-h-[100vh] md:border-t pt-24 md:pt-8 pr-4 pl-8 top-0 left-0 bottom-0 h-full md:pr-6 w-[50vw] border-r-navBlack absolute bg-white"
           }
         >
-          <div className="flex gap-2">
+          <div
+            className={`flex gap-2 ${
+              activeLink === "create" ? "text-blue" : ""
+            }`}
+          >
             <img src="./images/Link.svg" alt="Link" className="w-7" />
             <Link
               to="/"
@@ -88,8 +95,12 @@ function TrimSection({
               Create
             </Link>
           </div>
-          <div className="flex gap-2">
-            <img src="./images/Link.svg" alt="Link" className="w-7" />
+          <div
+            className={`flex gap-2 items-center ${
+              activeLink === "total" ? "text-blue" : ""
+            }`}
+          >
+            <i className="fas fa-link text-xl"></i>
             <Link
               to="/"
               onClick={(e) => {
@@ -102,7 +113,11 @@ function TrimSection({
               Links
             </Link>
           </div>
-          <div className="flex gap-2 items-center">
+          <div
+            className={`flex gap-2 text-center ${
+              activeLink === "account" ? "text-blue" : ""
+            }`}
+          >
             <Link
               to="/"
               onClick={(e) => {
