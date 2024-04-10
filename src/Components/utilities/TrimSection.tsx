@@ -3,23 +3,27 @@ import { useState } from "react";
 import Create from "./Create";
 import Total from "./Total";
 import Account from "./Account";
+import Loader from "./Loader";
 
 export interface TrimSection {
   logout: boolean;
   setLogout: (value: boolean) => void;
   handleLogout: () => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }
 
-function TrimSection({ logout, setLogout, handleLogout }: TrimSection) {
-  const [isLoading, setIsLoading] = useState(false);
+function TrimSection({
+  logout,
+  setLogout,
+  handleLogout,
+  isLoading,
+  setIsLoading,
+}: TrimSection) {
   const [page, setPage] = useState(true);
   const [account, setAccount] = useState(false);
   const [total, setTotal] = useState(false);
   const [create, setCreate] = useState(false);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   const handleAccount = () => {
     setPage(false);
@@ -39,6 +43,14 @@ function TrimSection({ logout, setLogout, handleLogout }: TrimSection) {
     setTotal(false);
   };
 
+  if (isLoading) {
+    return (
+      <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className="pt-8 md:pt-16 md:px-8 lg:px-16 bg-no-repeat">
       {create && (
@@ -49,7 +61,11 @@ function TrimSection({ logout, setLogout, handleLogout }: TrimSection) {
           className="flex items-center gap-2 absolute left-5 top-24 md:hidden"
           onClick={() => setCreate(true)}
         >
-          <img src="./images/icons8-menu-bar (1).svg" className="w-7 cursor-pointer" alt="" />
+          <img
+            src="./images/icons8-menu-bar (1).svg"
+            className="w-7 cursor-pointer"
+            alt=""
+          />
         </div>
         <div
           className={
@@ -102,13 +118,23 @@ function TrimSection({ logout, setLogout, handleLogout }: TrimSection) {
           </div>
         </div>
 
-        {page && <Create isLoading={isLoading} setIsLoading={setIsLoading} handleTotal={handleTotal}/>}
+        {page && (
+          <Create
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            handleTotal={handleTotal}
+          />
+        )}
         {total && <Total handlePage={handlePage} />}
         {account && (
           <Account
             logout={logout}
             setLogout={setLogout}
             handleLogout={handleLogout}
+            isLoading={false}
+            setIsLoading={function (): void {
+              throw new Error("Function not implemented.");
+            }}
           />
         )}
       </div>

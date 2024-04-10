@@ -3,6 +3,7 @@ import { auth, db } from "../../config/firebase";
 import { nanoid } from "nanoid";
 import { useState } from "react";
 import Loader from "./Loader";
+import { toast } from "react-toastify";
 
 interface CreateInterface {
   isLoading: boolean;
@@ -196,10 +197,12 @@ function Create({ isLoading, setIsLoading, handleTotal }: CreateInterface) {
           }
         }
         handleTotal();
+        toast.success("Check your links in order to see");
       } else {
         setInputError("Link is required");
         setNameError("Name is required");
       }
+      //handleTotal();
     }
   };
 

@@ -22,7 +22,7 @@ function Hero({ user }: { user: User | null }) {
                 </span>
               </h2>
             </div>
-            <div className="hero-text md:px-[160px] px-6 pt-8 leading-6 text-lg h-[150px] md:h-[175px] lg:h-[120px]">
+            <div className="hero-text md:px-[160px] px-6 pt-8 leading-6 text-lg h-[190px] sm:h-[150px] md:h-[175px] lg:h-[120px]">
               <p>
                 Personalize your shortened URLs to align with your brand
                 identity. Utilize custom slugs, branded links, and domain

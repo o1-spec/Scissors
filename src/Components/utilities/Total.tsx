@@ -12,6 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { Excerpts } from "./Excerpts";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 interface UserLinks {
   id: string;
@@ -29,61 +30,70 @@ interface handlePage {
 
 function Total({ handlePage }: handlePage) {
   const [arr, setArr] = useState<UserLinks[]>([]);
-
+  const [loading, setLoading] = useState(true);
   const user = auth.currentUser;
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userId = user.uid;
-        const userDocRef = userId
-          ? collection(db, "user-collection", userId, "slug")
-          : "";
-        if (userDocRef) {
-          getDocs(userDocRef)
-            .then((querySnapshot) => {
-              if (!querySnapshot.empty) {
-                const promises = querySnapshot.docs.map(async (document) => {
-                  const colRef = doc(db, "urls", document.id);
-                  const colDocSnapshot = await getDoc(colRef);
-                  const timesClicked = colDocSnapshot.data()?.timesClicked;
+    onAuthStateChanged(auth, async (user) => {
+      try {
+        setLoading(true);
+        if (user) {
+          const userId = user.uid;
+          const userDocRef = userId
+            ? collection(db, "user-collection", userId, "slug")
+            : "";
+          if (userDocRef) {
+            getDocs(userDocRef)
+              .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                  const promises = querySnapshot.docs.map(async (document) => {
+                    const colRef = doc(db, "urls", document.id);
+                    const colDocSnapshot = await getDoc(colRef);
+                    const timesClicked = colDocSnapshot.data()?.timesClicked;
 
-                  if (timesClicked !== undefined) {
-                    await updateDoc(document.ref, { timesClicked });
-                  }
-                });
+                    if (timesClicked !== undefined) {
+                      await updateDoc(document.ref, { timesClicked });
+                    }
+                  });
 
-                Promise.all(promises).then(() => {
-                  if (querySnapshot) {
-                    const urls: UserLinks[] = [];
-                    querySnapshot.docs.forEach((doc) => {
-                      const {
-                        url,
-                        shortLink,
-                        qrCodeData,
-                        timesClicked,
-                        linkName,
-                      } = doc.data();
-                      urls.push({
-                        ...doc.data(),
-                        id: doc.id,
-                        url,
-                        shortLink,
-                        qrCodeData,
-                        timesClicked,
-                        linkName,
-                        editUrls: false,
+                  Promise.all(promises).then(() => {
+                    if (querySnapshot) {
+                      const urls: UserLinks[] = [];
+                      querySnapshot.docs.forEach((doc) => {
+                        const {
+                          url,
+                          shortLink,
+                          qrCodeData,
+                          timesClicked,
+                          linkName,
+                        } = doc.data();
+                        urls.push({
+                          ...doc.data(),
+                          id: doc.id,
+                          url,
+                          shortLink,
+                          qrCodeData,
+                          timesClicked,
+                          linkName,
+                          editUrls: false,
+                        });
                       });
-                    });
-                    setArr(urls);
-                  }
-                });
-              }
-            })
-            .catch((error: unknown) => {
-              console.log(error);
-            });
+                      setLoading(true);
+                      setArr(urls);
+                    }
+                    setLoading(false);
+                  });
+                }
+              })
+              .catch((error: unknown) => {
+                console.log(error);
+              });
+          }
         }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
     });
   }, []);
@@ -115,6 +125,14 @@ function Total({ handlePage }: handlePage) {
   };
   //console.log(arr);
 
+  if (loading) {
+    return (
+      <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className="md:pl-12 pl-4 w-full pr-4 md:pr-0">
       <h3 className=" text-blue text-3xl font-semibold pb-5 md:pt-0 pt-12">
@@ -124,7 +142,8 @@ function Total({ handlePage }: handlePage) {
         <div className="flex items-center justify-center mt-6">
           <div className="flex flex-col gap-2 justify-center items-center bg-blue text-white px-10 py-6 rounded-md">
             <p className="text-lg text-center">
-              You have not created any link yet
+              You have not created any link yet. If you have please wait for
+              2sec ☺️. Thank you
             </p>
             <Link
               to="/"
