@@ -27,6 +27,24 @@ function Homepage({ PostContext }: HomepageProp) {
       }
     }
   }, [location.hash]);
+
+  useEffect(() => {
+    if (location.hash === "#features") {
+      const featureSection = document.getElementById("features");
+      if (featureSection) {
+        featureSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location.hash]);
+
+  useEffect(() => {
+    if (location.hash === "#pricing") {
+      const pricingSection = document.getElementById("pricing");
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location.hash]);
   return (
     <div className="font-customFont overflow-hidden">
       <Nav user={user} />
@@ -38,7 +56,7 @@ function Homepage({ PostContext }: HomepageProp) {
         <Faq />
       </div>
       <Revo user={user} />
-      <Footer /> 
+      <Footer />
     </div>
   );
 }

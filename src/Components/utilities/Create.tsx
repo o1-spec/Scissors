@@ -249,7 +249,7 @@ function Create({ isLoading, setIsLoading, handleTotal }: CreateInterface) {
           </div>
           <div className="flex w-full md:gap-x-7 gap-y-6 md:gap-y-0 flex-col md:flex-row">
             <div className="flex flex-col gap-2 basis-[50%] w-full">
-              <label className="text-xl font-bold">Name</label>
+              <label className="text-xl font-bold">Name of URL</label>
               <input
                 type="text"
                 id="name"
@@ -263,7 +263,7 @@ function Create({ isLoading, setIsLoading, handleTotal }: CreateInterface) {
               )}
             </div>
             <div className="flex flex-col gap-2 basis-[50%] w-full">
-              <label className="text-xl font-bold">Alias</label>
+              <label className="text-xl font-bold">Alias of URL</label>
               <input
                 type="text"
                 id="alias"

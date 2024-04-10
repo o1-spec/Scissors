@@ -19,7 +19,7 @@ function Pricing() {
           </p> 
         </div>
         <div className="max-w-[1100px] my-0 mx-auto lg:translate-x-24 pt-16 lg:pl-7 md:pl-4 pl-0 md:px-4 pb-7">
-          <div className="flex items-center flex-col md:flex-row">
+          <div className="flex items-center flex-col gap-5 md:gap-0 md:flex-row">
             <div className="border border-blue border-r-1 md:border-r-0 max-w-fit rounded-md pt-7 pr-8 pb-8 pl-16">
               <p className="text-xl pb-4">Basic</p>
               <h6 className="text-4xl font-extrabold pb-4">Free</h6>

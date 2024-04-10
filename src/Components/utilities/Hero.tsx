@@ -22,7 +22,7 @@ function Hero({ user }: { user: User | null }) {
                 </span>
               </h2>
             </div>
-            <div className="hero-text md:px-[160px] px-6 pt-8 leading-6 text-lg">
+            <div className="hero-text md:px-[160px] px-6 pt-8 leading-6 text-lg h-[150px] md:h-[175px] lg:h-[120px]">
               <p>
                 Personalize your shortened URLs to align with your brand
                 identity. Utilize custom slugs, branded links, and domain
@@ -38,7 +38,7 @@ function Hero({ user }: { user: User | null }) {
             </div>
             <div className="flex items-center gap-8 pt-4">
               {!user && (
-                <Link
+                <Link 
                   to="/signup"
                   className="text-white font-normal text-[16px] px-8 py-3 rounded-2xl bg-blue hover:bg-white hover:text-blue border-blue border-[1px] transition duration-300"
                 >

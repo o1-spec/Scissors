@@ -42,20 +42,20 @@ function TrimSection({ logout, setLogout, handleLogout }: TrimSection) {
   return (
     <div className="pt-8 md:pt-16 md:px-8 lg:px-16 bg-no-repeat">
       {create && (
-        <div className="overlay" onClick={() => setCreate(false)}></div>
+        <div className="overlay-link" onClick={() => setCreate(false)}></div>
       )}
       <div className="flex h-full">
         <div
           className="flex items-center gap-2 absolute left-5 top-24 md:hidden"
           onClick={() => setCreate(true)}
         >
-          <img src="./images/icons8-menu-bar (1).svg" className="w-7" alt="" />
+          <img src="./images/icons8-menu-bar (1).svg" className="w-7 cursor-pointer" alt="" />
         </div>
         <div
           className={
             !create
-              ? "flex flex-col gap-16 basis-[16%] transition-all duration-500 md:translate-x-0 -translate-x-[100%] z-10 max-h-[60vh] md:min-h-[100vh] md:border-r md:border-t pt-24 md:pt-8 pr-4 pl-8 top-0 md:pr-6 left-0 bottom-0 h-full md:w-fit w-[50vw] border-r-navBlack absolute md:relative bg-white"
-              : "flex flex-col gap-16 basis-[16%] transition-all duration-500 md:translate-x-0 min-h-[60vh] md:border-r z-10  md:min-h-[100vh] md:border-t pt-24 md:pt-8 pr-4 pl-8 top-0 left-0 bottom-0 h-full md:pr-6 w-[50vw] border-r-navBlack absolute bg-white"
+              ? "flex flex-col gap-16 basis-[16%] transition-all duration-500 md:translate-x-0 -translate-x-[100%] z-20 max-h-[60vh] md:min-h-[100vh] md:border-r md:border-t pt-24 md:pt-8 pr-4 pl-8 top-0 md:pr-6 left-0 bottom-0 h-full md:w-fit w-[50vw] border-r-navBlack absolute md:relative bg-white"
+              : "flex flex-col gap-16 basis-[16%] transition-all duration-500 md:translate-x-0 min-h-[60vh] md:border-r z-20  md:min-h-[100vh] md:border-t pt-24 md:pt-8 pr-4 pl-8 top-0 left-0 bottom-0 h-full md:pr-6 w-[50vw] border-r-navBlack absolute bg-white"
           }
         >
           <div className="flex gap-2">

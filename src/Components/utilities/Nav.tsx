@@ -65,7 +65,7 @@ function Nav({ user }: { user: User | null }) {
             <li className="nav-link flex items-center">
               <Link
                 className="text-navBlack md:text-[17px] text-xl font-semibold"
-                to="/"
+                to="/#features"
                 onClick={() => setNav(false)}
               >
                 {" "}
@@ -76,7 +76,7 @@ function Nav({ user }: { user: User | null }) {
             <li className="nav-link">
               <Link
                 className="text-navBlack md:text-[17px] text-xl font-semibold"
-                to="/"
+                to="/#pricing"
                 onClick={() => setNav(false)}
               >
                 {" "}
@@ -96,7 +96,7 @@ function Nav({ user }: { user: User | null }) {
             <li className="nav-link">
               <Link
                 className="text-navBlack md:text-[17px] text-xl font-semibold"
-                to="/"
+                to="/#faq"
               >
                 {" "}
                 FAQs{" "}

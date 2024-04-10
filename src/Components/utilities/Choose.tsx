@@ -8,7 +8,7 @@ function Choose() {
 
   return (
     <>
-      <section data-aos="fade-up" className="max-w-[1070px] my-0 mx-auto pt-24 pb-8 md:px-0 px-4">
+      <section data-aos="fade-up" id="features" className="max-w-[1070px] my-0 mx-auto pt-24 pb-8 md:px-0 px-4">
         <div className="flex items-start gap-32 md:gap-16 lg:gap-32 md:px-4 lg:px-0 flex-col md:flex-row">
           <div className="basis-2/5">
             <h4 className="text-4xl font-extrabold pb-3">
