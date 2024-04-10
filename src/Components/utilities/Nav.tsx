@@ -55,7 +55,7 @@ function Nav({ user }: { user: User | null }) {
             <li className="nav-link url">
               <Link
                 className="text-navBlack md:text-[17px] text-xl font-semibold"
-                to="/"
+                to="/trim"
                 onClick={() => setNav(false)}
               >
                 {" "}
@@ -86,7 +86,7 @@ function Nav({ user }: { user: User | null }) {
             <li className="nav-link">
               <Link
                 className="text-navBlack md:text-[17px] text-xl font-semibold"
-                to="/"
+                to="/trim"
                 onClick={() => setNav(false)}
               >
                 {" "}
