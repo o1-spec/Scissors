@@ -133,6 +133,7 @@ function Total({ handlePage }: handlePage) {
     );
   }
 
+  console.log(arr);
   return (
     <div className="md:pl-12 pl-4 w-full pr-4 md:pr-0">
       <h3 className=" text-blue text-3xl font-semibold pb-5 md:pt-0 pt-12">
@@ -168,6 +169,24 @@ function Total({ handlePage }: handlePage) {
               <img src={item.qrCodeData} alt="" />
             </div>
             <div className="pt-2">
+              <div className="flex items-center justify-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
+                  />
+                </svg>
+
+                <span> {item.timesClicked}</span>
+              </div>
               <h2 className="text-center font-semibold">{item.linkName}</h2>
               <div>
                 <span>Short URL:</span>
@@ -182,7 +201,7 @@ function Total({ handlePage }: handlePage) {
             </div>
             <div className="flex gap-2 justify-between items-center pt-4 w-full">
               <div className="border-2 border-blue px-1 rounded-lg">
-                <i className="fas fa-edit cursor-pointer"></i>
+                <img src="./images/Vector (4).svg" alt="scissors-icon" className="h-4 w-4"/>
               </div>
               <div className="border-2 border-blue px-1 rounded-lg">
                 <i
